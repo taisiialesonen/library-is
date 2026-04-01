@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: "library-is"
+
+  config:
+    import:
+      - optional:file:.env[.properties]
+      - classpath:application-db.yml
+
+server:
+  address: 0.0.0.0
