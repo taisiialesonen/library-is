@@ -1,9 +1,19 @@
 HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+.env
 .gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+**/src/main/resources/firebase-service-account.json
+/tools/docker/message-broker/rabbitmq_data/**
+/tools/docker/message-broker/rabbitmq_definitions.json
+gradle
+/tools/docker/database/pgdata
+/tools/docker/pgdata
+/tools/docker/rabbitmq_data
+/tools/docker/rabbitmq_definitions.json
+/tools/docker/data/
 
 ### STS ###
 .apt_generated
@@ -32,6 +42,9 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
