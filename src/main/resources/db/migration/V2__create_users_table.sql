@@ -1,4 +1,4 @@
-CREATE TABLE authors
+CREATE TABLE users
 (
     id          UUID PRIMARY KEY      DEFAULT gen_random_uuid(),
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -16,5 +16,5 @@ CREATE TABLE authors
     registration_date  DATE NOT NULL DEFAULT current_date,
     last_login_at TIMESTAMP WITH TIME ZONE,
     created_at  TIMESTAMP    WITH TIME ZONE NOT NULL DEFAULT now(),
-    updated_at  TIMESTAMP    WITH TIME ZONE NOT NULL DEFAULT now(),
-);
+    updated_at  TIMESTAMP    WITH TIME ZONE NOT NULL DEFAULT now()
+)
