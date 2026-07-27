@@ -1,0 +1,74 @@
+services:
+
+  postgres:
+    image: postgres:17.9
+    container_name: library-is-postgres
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-library}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-library}
+      POSTGRES_DB: ${DB_NAME:-library-is-db}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./tools/docker/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  postgres-init:
+    image: postgres:17.9
+    container_name: library-is-postgres-init
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DB_HOST: postgres
+      DB_USERNAME: ${DB_USERNAME:-library}
+      DB_PASSWORD: ${DB_PASSWORD:-library}
+      DB_NAME: ${DB_NAME:-library-is-db}
+    volumes:
+      - ./tools/docker/ensure-db.sh:/ensure-db.sh:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["bash", "/ensure-db.sh"]
+    restart: "no"
+
+  app:
+    build: .
+    container_name: library-is-app
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DB_USERNAME: ${DB_USERNAME:-library}
+      DB_PASSWORD: ${DB_PASSWORD:-library}
+      DB_NAME: ${DB_NAME:-library-is-db}
+      DB_URL: postgres:5432/${DB_NAME:-library-is-db}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully
+
+  pgadmin:
+    profiles: ["tools"]
+    image: dpage/pgadmin4:latest
+    container_name: library-is-pgadmin
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGA_USERNAME:-admin@library.local}
+      PGADMIN_DEFAULT_PASSWORD: ${PGA_PASSWORD:-admin}
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully

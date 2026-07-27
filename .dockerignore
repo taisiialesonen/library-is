@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.gradle
+build
+bin
+out
+.env
+*.iml
+*.iws
+*.ipr
+tools/docker/pgdata
+README.md
+HELP.md
