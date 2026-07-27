@@ -56,6 +56,7 @@ public class User extends AuditableEntity {
     @Column(name = "birth_date")
     LocalDate birthDate;
 
+    @Builder.Default
     @Column(name = "registration_date")
     LocalDate registrationDate = LocalDate.now();
 
