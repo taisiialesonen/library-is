@@ -17,16 +17,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor {
-    Optional<User> findUserByName(String name);
+public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
+    Optional<User> findByUsername(String username);
 
-    Optional<User> FindByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    Boolean existsByUsername(String name);
+    Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
 
-    Optional<User> findByUsernameOrEmail(String name, String email);
+    Optional<User> findByUsernameOrEmail(String username, String email);
 
     Page<User> findAllByStatus(StatusEnum status, Pageable pageable);
 
@@ -38,8 +38,8 @@ public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificat
 
     @Modifying
     @Transactional
-    @Query("UPDATE User u SET u.last_login_at=: last_login_at WHERE u.id=: id ")
-    void updateLastLoginAt(@Param("id") UUID userId, @Param("last_login_at") OffsetDateTime lastLoginAt);
+    @Query("UPDATE User u SET u.lastLoginAt = :lastLoginAt WHERE u.id = :id")
+    void updateLastLoginAt(@Param("id") UUID userId, @Param("lastLoginAt") OffsetDateTime lastLoginAt);
 //    List<User> finadActiveReadersWithBorrowings(); TODO: Требуется таблица
 
 }
