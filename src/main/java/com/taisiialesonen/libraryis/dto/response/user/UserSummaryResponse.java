@@ -44,4 +44,4 @@ public class UserSummaryResponse {
 
     @Schema(description = "Дата регистрации")
     private LocalDateTime registrationData;
-    }
+}

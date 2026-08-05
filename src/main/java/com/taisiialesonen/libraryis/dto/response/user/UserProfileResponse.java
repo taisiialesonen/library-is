@@ -53,7 +53,7 @@ public class UserProfileResponse {
     private LocalDate birthDate;
 
     @Schema(description = "Дата последнего входа")
-    private LocalDateTime lastLoinAt;
+    private LocalDateTime lastLoginAt;
 
     @Schema(description = "Дата создания")
     private LocalDateTime createdAt;
