@@ -5,7 +5,7 @@ import com.taisiialesonen.libraryis.enums.StatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -43,5 +43,5 @@ public class UserSummaryResponse {
     private StatusEnum status;
 
     @Schema(description = "Дата регистрации")
-    private LocalDateTime registrationData;
+    private LocalDate registrationDate;
 }

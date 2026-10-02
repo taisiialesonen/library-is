@@ -1,4 +1,4 @@
-#Data Source Properties
+# Data Source Properties (shared; override per profile if needed)
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -9,12 +9,9 @@ spring:
       initialization-fail-timeout: -1
       connection-timeout: 30000
 
-  #JPA Properties
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-        show_sql: true
     hibernate:
       ddl-auto: validate

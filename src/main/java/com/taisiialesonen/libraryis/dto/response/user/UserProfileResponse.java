@@ -44,7 +44,7 @@ public class UserProfileResponse {
     private StatusEnum status;
 
     @Schema(description = "Дата регистрации")
-    private LocalDateTime registrationData;
+    private LocalDate registrationDate;
 
     @Schema(description = "Адрес")
     private String address;

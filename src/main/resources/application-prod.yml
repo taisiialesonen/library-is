@@ -1,0 +1,12 @@
+# Docker prod: docker compose --profile prod up --build -d
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+
+logging:
+  level:
+    root: WARN
+    com.taisiialesonen.libraryis: INFO

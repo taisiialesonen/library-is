@@ -8,20 +8,28 @@
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) (или Docker Engine + Compose)
 - [Git](https://git-scm.com/)
+- [Java 25+](https://jdk.java.net/) — для дебага из IDE
 
-Для локальной разработки в IDE дополнительно нужен [Java 25+](https://jdk.java.net/).
+`.env` не обязателен — используются дефолты (`library` / `library-is-db`). Чтобы переопределить: `cp .env.example .env`.
 
 ---
 
-## Быстрый старт
+## Дебаг из IDE (основной способ разработки)
+
+1. Поднять только Postgres:
 
 ```bash
-git clone https://github.com/taisiialesonen/library-is.git
-cd library-is
-docker compose up --build
+docker compose up -d
 ```
 
-После старта:
+2. Запустить `LibraryIsApplication` из IDE (конфигурация `.run/LibraryIsApplication.run.xml`, профиль `local`)  
+   или:
+
+```bash
+./gradlew bootRun
+```
+
+Приложение слушает [http://localhost:8080](http://localhost:8080) и подключается к `localhost:5432`.
 
 | Сервис     | URL                                                                            |
 |------------|--------------------------------------------------------------------------------|
@@ -29,25 +37,25 @@ docker compose up --build
 | Swagger UI | [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) |
 | Actuator   | [http://localhost:8080/actuator](http://localhost:8080/actuator)               |
 
-`.env` не обязателен — используются локальные дефолты (`library` / `library-is-db`). Чтобы переопределить, скопируй `.env.example` в `.env`.
+---
+
+## Демо через Docker
+
+Полный стек (Postgres + приложение), профиль Spring `demo`:
+
+```bash
+docker compose --profile demo up --build
+```
 
 ---
 
-## Локальная разработка (IDE)
-
-Поднять только базу:
+## Прод через Docker
 
 ```bash
-docker compose up postgres postgres-init -d
+docker compose --profile prod up --build -d
 ```
 
-Затем запусти `LibraryIsApplication` из IDE или:
-
-```bash
-./gradlew bootRun
-```
-
-Приложение подключится к `localhost:5432/library-is-db` и при необходимости создаст БД само.
+Spring-профиль: `prod` (без SQL-логов, более тихий logging).
 
 ---
 
@@ -60,18 +68,20 @@ docker compose --profile tools up -d
 Интерфейс: [http://localhost:5050](http://localhost:5050)  
 Логин по умолчанию: `admin@library.local` / `admin`
 
+Можно комбинировать: `docker compose --profile demo --profile tools up --build`.
+
 ---
 
 ## Остановка
 
 ```bash
-docker compose down
+docker compose --profile demo --profile prod --profile tools down
 ```
 
 С удалением данных БД:
 
 ```bash
-docker compose down -v
+docker compose --profile demo --profile prod --profile tools down -v
 # Windows
 rmdir /s /q tools\docker\pgdata
 # Linux / macOS
