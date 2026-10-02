@@ -24,6 +24,14 @@ public class CreateDatabaseListener implements ApplicationListener<ApplicationEn
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
         ConfigurableEnvironment env = event.getEnvironment();
+
+        // Off by default; enabled in local/demo/prod. Must stay off in tests:
+        // ApplicationEnvironmentPreparedEvent fires before @DynamicPropertySource
+        // (Testcontainers), so connecting here would hit localhost and fail in CI.
+        if (!env.getProperty("library.datasource.ensure-database", Boolean.class, false)) {
+            return;
+        }
+
         String url = env.getProperty("spring.datasource.url");
         String username = env.getProperty("spring.datasource.username");
         String password = env.getProperty("spring.datasource.password", "");

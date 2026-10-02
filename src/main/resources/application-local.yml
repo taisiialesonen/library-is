@@ -1,4 +1,8 @@
 # IDE / local debug (LibraryIsApplication or ./gradlew bootRun)
+library:
+  datasource:
+    ensure-database: true
+
 spring:
   jpa:
     properties:

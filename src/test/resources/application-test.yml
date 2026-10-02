@@ -1,0 +1,4 @@
+# Tests use Testcontainers; do not connect to localhost during EnvironmentPreparedEvent.
+library:
+  datasource:
+    ensure-database: false

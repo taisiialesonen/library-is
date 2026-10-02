@@ -1,4 +1,8 @@
 # Docker prod: docker compose --profile prod up --build -d
+library:
+  datasource:
+    ensure-database: true
+
 spring:
   jpa:
     properties:

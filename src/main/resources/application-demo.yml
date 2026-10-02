@@ -1,4 +1,8 @@
 # Docker demo: docker compose --profile demo up --build
+library:
+  datasource:
+    ensure-database: true
+
 spring:
   jpa:
     properties:

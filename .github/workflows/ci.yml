@@ -31,10 +31,3 @@ jobs:
 
       - name: Build and test
         run: ./gradlew build
-        env:
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_URL: ${{ secrets.DB_URL }}
-          PGA_USERNAME: ${{ secrets.PGA_USERNAME }}
-          PGA_PASSWORD: ${{ secrets.PGA_PASSWORD }}
